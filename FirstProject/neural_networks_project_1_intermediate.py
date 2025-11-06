@@ -1094,9 +1094,6 @@ def show_classification_examples(X_test, y_test, y_pred, class_names,
     plt.show()
     plt.close()
 
-    print(f"Saved to Google Drive: {full_path}")
-
-
 print("\n" + "="*60)
 print("CLASSIFICATION EXAMPLES")
 print("="*60)
