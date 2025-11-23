@@ -15,10 +15,7 @@ CIFAR-10 Classification with:
 3. Convolutional Neural Network (CNN) - Multiple Configurations
 4. Comprehensive Comparison & Analysis
 
-Author: Your Name
-Date: November 2024
-
-# **Libraries**
+# **LIBRARIES**
 """
 
 from google.colab import drive
@@ -69,7 +66,7 @@ if torch.cuda.is_available():
 
 print("Libraries imported successfully!")
 
-"""# **Save in Google Drive**"""
+"""# **SAVE IN GOOGLE DRIVE**"""
 
 # Mount Drive
 drive.mount('/content/drive', force_remount=True)
@@ -474,7 +471,7 @@ for exp_name, config in experiments.items():
         'test_results': test_results
     }
 
-    print(f"✅ Test Accuracy: {test_results['accuracy']:.2f}%")
+    print(f"Test Accuracy: {test_results['accuracy']:.2f}%")
 
     # Save model
     torch.save(model.state_dict(), f"{SAVE_PATH}/{exp_name}_model.pth")
@@ -780,6 +777,6 @@ print(f"• Best Method: {df_summary.iloc[0]['Method']}")
 print(f"• Total Training Time: {sum([r['training_time'] for r in all_results.values()]):.1f}s")
 
 if current_best >= 90:
-    print(f"\nTARGET ACHIEVED: {current_best:.2f}% ≥ 90% ✅")
+    print(f"\nTARGET ACHIEVED: {current_best:.2f}% ≥ 90%")
 else:
     print(f"\nTARGET: {current_best:.2f}% / 90% ({90-current_best:.2f}% remaining)")
