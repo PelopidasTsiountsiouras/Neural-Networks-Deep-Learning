@@ -1,0 +1,128 @@
+[2025-12-22 11:04:14] ============================================================
+[2025-12-22 11:04:14] CIFAR-10 SVM CLASSIFICATION - EXTENDED EXPERIMENTS
+[2025-12-22 11:04:14] ============================================================
+[2025-12-22 11:04:14] 
+Loading CIFAR-10 dataset...
+[2025-12-22 11:04:15] Training set shape: (50000, 32, 32, 3)
+[2025-12-22 11:04:15] Test set shape: (10000, 32, 32, 3)
+[2025-12-22 11:04:16] 
+Standardizing features...
+[2025-12-22 11:04:17] ============================================================
+[2025-12-22 11:04:17] EXPERIMENT 1: BASELINE WITH STANDARD PARAMETERS
+[2025-12-22 11:04:17] ============================================================
+[2025-12-22 11:04:17] 
+Applying PCA (90% variance)...
+[2025-12-22 11:04:43] Original dimensions: 3072
+[2025-12-22 11:04:43] PCA dimensions: 103
+[2025-12-22 11:04:43] Variance explained: 0.9007
+[2025-12-22 11:04:43] 
+Using full dataset of 50000 samples
+[2025-12-22 11:04:43] 
+1. Training Linear SVM...
+[2025-12-22 11:05:37]    Time: 54.23s, Accuracy: 0.4027
+[2025-12-22 11:05:37] 
+2. Training RBF SVM...
+[2025-12-22 11:09:56]    Time: 221.03s, Accuracy: 0.5614
+[2025-12-22 11:09:56] 
+3. Training Polynomial SVM...
+[2025-12-22 11:14:34]    Time: 255.74s, Accuracy: 0.4668
+[2025-12-22 11:14:34] 
+4. Training 1-NN...
+[2025-12-22 11:14:35]    Time: 0.01s, Accuracy: 0.3861
+[2025-12-22 11:14:35] 
+5. Training 3-NN...
+[2025-12-22 11:14:36]    Time: 0.01s, Accuracy: 0.3663
+[2025-12-22 11:14:36] 
+6. Training Nearest Centroid...
+[2025-12-22 11:14:36]    Time: 0.08s, Accuracy: 0.2807
+[2025-12-22 11:14:36] 
+7. Training MLP...
+[2025-12-22 11:14:43]    Time: 7.20s, Accuracy: 0.5013
+[2025-12-22 11:14:43] Results table saved to: ./CIFAR10_SVM_Experiments/experiment_log_20251222_110414_baseline.csv
+[2025-12-22 11:14:44] Confusion matrix saved
+[2025-12-22 11:14:44] ============================================================
+[2025-12-22 11:14:44] EXPERIMENT 2: SUBSET SIZE COMPARISON
+[2025-12-22 11:14:44] ============================================================
+[2025-12-22 11:15:09] 
+Testing with 1000 samples...
+[2025-12-22 11:15:10]    Linear SVM - Time: 0.27s, Acc: 0.2844
+[2025-12-22 11:15:10]    RBF SVM    - Time: 0.13s, Acc: 0.3601
+[2025-12-22 11:15:10] 
+Testing with 5000 samples...
+[2025-12-22 11:15:16]    Linear SVM - Time: 0.90s, Acc: 0.3707
+[2025-12-22 11:15:16]    RBF SVM    - Time: 1.70s, Acc: 0.4411
+[2025-12-22 11:15:16] 
+Testing with 10000 samples...
+[2025-12-22 11:15:32]    Linear SVM - Time: 2.82s, Acc: 0.3802
+[2025-12-22 11:15:32]    RBF SVM    - Time: 6.48s, Acc: 0.4737
+[2025-12-22 11:15:32] Results table saved to: ./CIFAR10_SVM_Experiments/experiment_log_20251222_110414_subset_comparison.csv
+[2025-12-22 11:15:33] Subset comparison plots saved
+[2025-12-22 11:15:33] ============================================================
+[2025-12-22 11:15:33] EXPERIMENT 3: PCA VARIANCE THRESHOLD COMPARISON
+[2025-12-22 11:15:33] ============================================================
+[2025-12-22 11:15:33] 
+Testing with 85% variance...
+[2025-12-22 11:18:45]    Components: 57, Actual variance: 0.8504
+[2025-12-22 11:18:45]    Time: 141.39s, Accuracy: 0.5490
+[2025-12-22 11:18:45] 
+Testing with 90% variance...
+[2025-12-22 11:23:31]    Components: 103, Actual variance: 0.9007
+[2025-12-22 11:23:31]    Time: 222.91s, Accuracy: 0.5614
+[2025-12-22 11:23:31] 
+Testing with 95% variance...
+[2025-12-22 11:32:55]    Components: 221, Actual variance: 0.9502
+[2025-12-22 11:32:55]    Time: 462.77s, Accuracy: 0.5713
+[2025-12-22 11:32:55] Results table saved to: ./CIFAR10_SVM_Experiments/experiment_log_20251222_110414_pca_comparison.csv
+[2025-12-22 11:32:55] PCA comparison plots saved
+[2025-12-22 11:32:55] ============================================================
+[2025-12-22 11:32:55] EXPERIMENT 4: HYPERPARAMETER TUNING
+[2025-12-22 11:32:55] ============================================================
+[2025-12-22 11:33:19] 
+4a. Linear SVM - Testing different C values...
+[2025-12-22 11:33:19]    Testing C=0.1...
+[2025-12-22 11:33:36]       Accuracy: 0.3953, Time: 16.74s
+[2025-12-22 11:33:36]    Testing C=1.0...
+[2025-12-22 11:33:53]       Accuracy: 0.3953, Time: 16.91s
+[2025-12-22 11:33:53]    Testing C=10.0...
+[2025-12-22 11:34:10]       Accuracy: 0.3953, Time: 16.86s
+[2025-12-22 11:34:10] 
+4b. RBF SVM - Testing different C and gamma values...
+[2025-12-22 11:34:10]    Testing C=1.0, gamma=scale...
+[2025-12-22 11:37:53]       Accuracy: 0.5406, Time: 185.07s
+[2025-12-22 11:37:53]    Testing C=1.0, gamma=0.001...
+[2025-12-22 11:42:38]       Accuracy: 0.5545, Time: 247.24s
+[2025-12-22 11:42:38]    Testing C=1.0, gamma=0.01...
+[2025-12-22 11:56:59]       Accuracy: 0.2047, Time: 818.25s
+[2025-12-22 11:56:59]    Testing C=10.0, gamma=scale...
+[2025-12-22 12:01:14]       Accuracy: 0.5614, Time: 218.39s
+[2025-12-22 12:01:14]    Testing C=10.0, gamma=0.001...
+[2025-12-22 12:10:30]       Accuracy: 0.5604, Time: 516.31s
+[2025-12-22 12:10:30]    Testing C=10.0, gamma=0.01...
+[2025-12-22 12:28:42]       Accuracy: 0.2209, Time: 1051.12s
+[2025-12-22 12:28:42]    Testing C=100.0, gamma=scale...
+[2025-12-22 12:34:04]       Accuracy: 0.5443, Time: 286.47s
+[2025-12-22 12:34:04]    Testing C=100.0, gamma=0.001...
+[2025-12-22 12:43:22]       Accuracy: 0.5556, Time: 519.01s
+[2025-12-22 12:43:22]    Testing C=100.0, gamma=0.01...
+[2025-12-22 13:01:36]       Accuracy: 0.2209, Time: 1051.65s
+[2025-12-22 13:01:36] Results table saved to: ./CIFAR10_SVM_Experiments/experiment_log_20251222_110414_hyperparameter_tuning.csv
+[2025-12-22 13:01:36] Hyperparameter tuning heatmap saved
+[2025-12-22 13:01:36] ============================================================
+[2025-12-22 13:01:36] EXPERIMENT 6: BINARY CLASSIFICATION TASKS
+[2025-12-22 13:01:36] ============================================================
+[2025-12-22 13:02:00] 
+Binary task: airplane vs automobile
+[2025-12-22 13:02:00]    Training samples: 10000, Test samples: 2000
+[2025-12-22 13:02:03]    Linear SVM - Acc: 0.8235, Time: 0.27s
+[2025-12-22 13:02:03]    RBF SVM    - Acc: 0.9110, Time: 2.40s
+[2025-12-22 13:02:03] 
+Binary task: bird vs cat
+[2025-12-22 13:02:03]    Training samples: 10000, Test samples: 2000
+[2025-12-22 13:02:09]    Linear SVM - Acc: 0.7080, Time: 0.17s
+[2025-12-22 13:02:09]    RBF SVM    - Acc: 0.7780, Time: 4.72s
+[2025-12-22 13:02:09] 
+Binary task: ship vs truck
+[2025-12-22 13:02:09]    Training samples: 10000, Test samples: 2000
+[2025-12-22 13:02:12]    Linear SVM - Acc: 0.7965, Time: 0.22s
+[2025-12-22 13:02:12]    RBF SVM    - Acc: 0.8850, Time: 2.58s
+[2025-12-22 13:02:12] Results table saved to: ./CIFAR10_SVM_Experiments/experiment_log_20251222_110414_binary_classification.csv

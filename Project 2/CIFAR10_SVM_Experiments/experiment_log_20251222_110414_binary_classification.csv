@@ -1,0 +1,4 @@
+Task,Linear SVM Acc,RBF SVM Acc
+airplane vs automobile,0.8235,0.911
+bird vs cat,0.708,0.778
+ship vs truck,0.7965,0.885
