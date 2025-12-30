@@ -729,4 +729,97 @@ def main():
             'final_val_loss': 'N/A',
             'final_train_accuracy': pca_result['train_pixel_accuracy'],
             'final_val_accuracy': 'N/A',
-            '
+            'test_loss': 'N/A',
+            'test_mse': pca_result['test_mse'],
+            'test_pixel_accuracy': pca_result['test_pixel_accuracy'],
+            'test_image_accuracy': 'N/A',
+            'best_reconstruction_mse': 'N/A',
+            'worst_reconstruction_mse': 'N/A',
+            'classifier_accuracy_on_reconstructed': pca_result['classifier_accuracy_on_reconstructed'],
+            'variance_explained': pca_result['variance_explained']
+        }
+    
+    # Save all results to main CSV
+    save_results_to_csv(all_results, 'all_results.csv')
+    
+    # Create separate CSV for just training/testing accuracies
+    accuracy_results = {}
+    for model_name, results in all_results.items():
+        accuracy_results[model_name] = {
+            'train_accuracy': results.get('final_train_accuracy', 'N/A'),
+            'test_pixel_accuracy': results.get('test_pixel_accuracy', 'N/A'),
+            'test_image_accuracy': results.get('test_image_accuracy', 'N/A'),
+            'classifier_accuracy_on_reconstructed': results.get('classifier_accuracy_on_reconstructed', 'N/A')
+        }
+    save_results_to_csv(accuracy_results, 'accuracy_summary.csv')
+    
+    # Create comparison plots
+    ae_results = {k: v for k, v in all_results.items() if 'AE_' in k}
+    pca_only_results = {k: v for k, v in all_results.items() if 'PCA_' in k}
+    
+    # Plot MSE comparison
+    comparison_data = {}
+    for model_name, results in all_results.items():
+        if results['test_mse'] != 'N/A':
+            comparison_data[model_name] = {'test_mse': results['test_mse']}
+    
+    if comparison_data:
+        plot_comparison_all_models(comparison_data, 'test_mse', 'plots/comparison_mse.png')
+    
+    # Plot pixel accuracy comparison
+    pixel_acc_data = {}
+    for model_name, results in all_results.items():
+        if results.get('test_pixel_accuracy') != 'N/A':
+            pixel_acc_data[model_name] = {'test_pixel_accuracy': results['test_pixel_accuracy']}
+    
+    if pixel_acc_data:
+        plot_comparison_all_models(pixel_acc_data, 'test_pixel_accuracy', 'plots/comparison_pixel_accuracy.png')
+    
+    # Plot training time comparison
+    time_data = {}
+    for model_name, results in all_results.items():
+        if results['training_time_seconds'] != 'N/A':
+            time_data[model_name] = {'training_time_seconds': results['training_time_seconds']}
+    
+    if time_data:
+        plot_comparison_all_models(time_data, 'training_time_seconds', 'plots/comparison_training_time.png')
+    
+    # Plot classifier accuracy comparison
+    classifier_data = {}
+    for model_name, results in all_results.items():
+        if 'classifier_accuracy_on_reconstructed' in results:
+            classifier_data[model_name] = {'classifier_accuracy': results['classifier_accuracy_on_reconstructed']}
+    
+    if classifier_data:
+        plot_comparison_all_models(
+            classifier_data, 'classifier_accuracy',
+            'plots/comparison_classifier_accuracy.png'
+        )
+    
+    # Final summary
+    logging.info('\n' + '='*60)
+    logging.info('EXPERIMENT COMPLETED')
+    logging.info('='*60)
+    logging.info(f'\nResults saved to:')
+    logging.info(f'  - results/all_results.csv (complete results)')
+    logging.info(f'  - results/accuracy_summary.csv (accuracy summary)')
+    logging.info(f'  - results/training_history_*.csv (epoch-by-epoch histories)')
+    logging.info(f'Models saved to: models/')
+    logging.info(f'Plots saved to: plots/')
+    logging.info(f'Log file: {log_filename}')
+    
+    # Find best model based on test pixel accuracy
+    ae_models = {k: v for k, v in all_results.items() if 'AE_' in k}
+    best_model = max(ae_models.items(), key=lambda x: x[1]['test_pixel_accuracy'])
+    logging.info(f'\nBest Autoencoder Model (by pixel accuracy): {best_model[0]}')
+    logging.info(f'Test Pixel Accuracy: {best_model[1]["test_pixel_accuracy"]:.2f}%')
+    logging.info(f'Test MSE: {best_model[1]["test_mse"]:.6f}')
+    logging.info(f'Classifier Accuracy on Reconstructed: {best_model[1]["classifier_accuracy_on_reconstructed"]:.2f}%')
+    
+    print('\n' + '='*60)
+    print('All experiments completed successfully!')
+    print('='*60)
+
+
+if __name__ == '__main__':
+    main()
