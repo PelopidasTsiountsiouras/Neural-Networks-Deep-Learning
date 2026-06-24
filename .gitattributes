@@ -1,1 +1,2 @@
 *.tex linguist-documentation=true
+*.ipynb linguist-documentation=true
